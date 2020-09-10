@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} Todo Profile {% endblock %}
+{% block content %}
+Hello there, {{ user.username }} !
+<a href="/auth/logout">logout</a><br><br>
+
+Add a new task here !
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+</form>
+<br><br>
+
+    {% for task in tasks %}
+        {% if task.is_completed == False %}
+            <a href="#">{{ task.title }}</a>
+            <a href="/accounts/complete/{{task.pk}}">Complete</a>
+            <a href="/accounts/remove/{{task.pk}}">Remove</a> <br>
+
+        {% endif %}
+    {% endfor %}
+
+<br>Completed tasks: <br> <br>
+
+{% for task in tasks %}
+        {% if task.is_completed == True %}
+            <a href="#">{{ task.title }}</a> <a href="/accounts/remove/{{task.pk}}">Remove</a><br>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
